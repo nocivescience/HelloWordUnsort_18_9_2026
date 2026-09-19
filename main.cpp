@@ -88,7 +88,9 @@ int main()
     // Palabra objetivo: "HOLA" + espacio + "MUNDO"
     // -----------------------------------------------------------------
     const std::string palabra = "HOLAMUNDO"; // sin espacio, el hueco se agrega visualmente
+    const std::string texto = "RICARDOFUENTES";
     const unsigned tamLetra = 60;
+    const unsigned tamtexto = 30;
     const float anchoCasilla = 60.f;
     const float altoLinea = 500.f; // altura (y) de las casillas objetivo
     const float espacioExtraDespuesDe = 4; // índice tras el cual va el espacio (después de HOLA)
@@ -146,6 +148,16 @@ int main()
         letra.texto.setFillColor(paleta[distColor(gen)]);
         letra.texto.setStyle(sf::Text::Bold);
         letras.push_back(std::move(letra));
+    }
+
+    for (std::size_t i=0;i<texto.size(); ++i) {
+        sf::Vector2f segundoObjetivo(inicioX + i * anchoCasilla, altoLinea + 100.f);
+        sf::RectangleShape segundaCasilla(sf::Vector2f(anchoCasilla - 10.f, tamtexto + 10.f));
+        segundaCasilla.setPosition(segundoObjetivo);
+        segundaCasilla.setFillColor(sf::Color(255, 255, 255 , 25));
+        segundaCasilla.setOutlineColor(sf::Color(255, 255, 255, 120));
+        segundaCasilla.setOutlineThickness(2.f);
+        casillas.push_back(segundaCasilla);
     }
 
     // -----------------------------------------------------------------
@@ -253,6 +265,9 @@ int main()
 
         for (const auto& l : letras)
             ventana.draw(l.texto);
+
+        for (const auto & c : segundaCasilla)
+            ventana.draw(c);
 
         if (completo)
             ventana.draw(mensajeExito);
